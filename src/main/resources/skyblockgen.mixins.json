@@ -1,0 +1,15 @@
+{
+    "required": true,
+    "minVersion": "0.8",
+    "package": "cozypenguin.skyblockgen.mixin",
+    "compatibilityLevel": "JAVA_17",
+    "mixins": [
+        "GeneratorTypeAccessor",
+        "ChunkGeneratorMixin"
+    ],
+    "client": [],
+    "server": [],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}

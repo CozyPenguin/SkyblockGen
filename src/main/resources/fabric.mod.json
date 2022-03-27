@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "skyblockgen",
+  "version": "1.0.0",
+  "name": "Skyblock Gen",
+  "description": "Adds a Skyblock Generator Type",
+  "authors": [
+    "CozyPenguin"
+  ],
+  "contact": {},
+  "license": "GPL v3",
+  "icon": "assets/skyblockgen/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "cozypenguin.skyblockgen.SkyblockGen"
+    ]
+  },
+  "accessWidener": "skyblockgen.accesswidener",
+  "mixins": [
+    "skyblockgen.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.12.12",
+    "fabric": "*",
+    "minecraft": "1.18.x",
+    "java": ">=17"
+  }
+}

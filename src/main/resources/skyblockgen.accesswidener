@@ -4,6 +4,4 @@ extendable method net/minecraft/client/world/GeneratorType <init> (Ljava/lang/St
 extendable class net/minecraft/world/gen/chunk/NoiseChunkGenerator
 accessible field net/minecraft/world/gen/chunk/NoiseChunkGenerator noiseRegistry Lnet/minecraft/util/registry/Registry;
 accessible field net/minecraft/world/gen/chunk/NoiseChunkGenerator seed J
-accessible field net/minecraft/world/gen/chunk/NoiseChunkGenerator noiseRouter Lnet/minecraft/world/gen/noise/NoiseRouter;
-accessible field net/minecraft/world/gen/chunk/NoiseChunkGenerator fluidLevelSampler Lnet/minecraft/world/gen/chunk/AquiferSampler$FluidLevelSampler;
-accessible method net/minecraft/world/gen/StructureWeightSampler <init> (Lnet/minecraft/world/gen/StructureAccessor;Lnet/minecraft/world/chunk/Chunk;)V
+extendable method net/minecraft/world/gen/chunk/ChunkGenerator method_41044 (Lnet/minecraft/structure/StructureSet$WeightedEntry;Lnet/minecraft/world/gen/StructureAccessor;Lnet/minecraft/util/registry/DynamicRegistryManager;Lnet/minecraft/structure/StructureManager;JLnet/minecraft/world/chunk/Chunk;Lnet/minecraft/util/math/ChunkPos;Lnet/minecraft/util/math/ChunkSectionPos;)Z

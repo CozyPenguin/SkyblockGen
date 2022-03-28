@@ -7,8 +7,13 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.structure.StructureManager;
 import net.minecraft.structure.StructureSet;
+import net.minecraft.structure.StructureSet.WeightedEntry;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.dynamic.RegistryOps;
+import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.math.ChunkSectionPos;
 import net.minecraft.util.math.noise.DoublePerlinNoiseSampler;
 import net.minecraft.util.registry.DynamicRegistryManager;
 import net.minecraft.util.registry.Registry;
@@ -20,13 +25,13 @@ import net.minecraft.world.biome.source.BiomeAccess;
 import net.minecraft.world.biome.source.BiomeSource;
 import net.minecraft.world.biome.source.MultiNoiseBiomeSource;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.gen.chunk.NoiseChunkGenerator;
-import net.minecraft.world.gen.chunk.VerticalBlockSample;
-import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.GenerationStep.Carver;
+import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.Blender;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.chunk.ChunkGeneratorSettings;
+import net.minecraft.world.gen.chunk.NoiseChunkGenerator;
+import net.minecraft.world.gen.chunk.VerticalBlockSample;
 
 public class SkyblockChunkGenerator extends NoiseChunkGenerator {
     public static final Codec<SkyblockChunkGenerator> CODEC = RecordCodecBuilder
@@ -35,6 +40,8 @@ public class SkyblockChunkGenerator extends NoiseChunkGenerator {
                     ChunkGeneratorSettings.REGISTRY_CODEC.fieldOf("settings").forGetter(scg -> scg.settings))
 
             ).apply(instance, instance.stable(SkyblockChunkGenerator::new)));
+
+    private static final Identifier SKYBLOCK_ISLAND = new Identifier(SkyblockGen.MODID, "skyblock_island");
 
     @Override
     protected Codec<? extends ChunkGenerator> getCodec() {
@@ -86,6 +93,17 @@ public class SkyblockChunkGenerator extends NoiseChunkGenerator {
 
     @Override
     public ChunkGenerator withSeed(long seed) {
-        return new NoiseChunkGenerator(this.field_37053, this.noiseRegistry, this.populationSource.withSeed(seed), seed, this.settings);
+        return new SkyblockChunkGenerator(this.field_37053, this.noiseRegistry, this.populationSource.withSeed(seed), seed, this.settings);
+    }
+
+    @Override
+    protected boolean method_41044(WeightedEntry weightedEntry, StructureAccessor structureAccessor, DynamicRegistryManager dynamicRegistryManager,
+            StructureManager structureManager, long l, Chunk chunk, ChunkPos chunkPos, ChunkSectionPos chunkSectionPos) {
+        var key = weightedEntry.structure().getKey();
+        if (key.isPresent() && key.get().getValue().equals(SKYBLOCK_ISLAND)) {
+            return super.method_41044(weightedEntry, structureAccessor, dynamicRegistryManager, structureManager, l, chunk, chunkPos, chunkSectionPos);
+        } else {
+            return false;
+        }
     }
 }

@@ -8,8 +8,8 @@ import com.mojang.datafixers.util.Pair;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.At.Shift;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
@@ -27,8 +27,8 @@ public class ChunkGeneratorMixin {
 
     @Inject(method = "locateStructure", at = @At(value = "INVOKE", target = "java/util/Map.entrySet()Ljava/util/Set;", shift = Shift.BEFORE), locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
     @SuppressWarnings("rawtypes")
-    private void inject(ServerWorld serverWorld, RegistryEntryList<ConfiguredStructureFeature<?, ?>> registryEntryList, BlockPos center, int radius, boolean skipExistingChunk,
-            CallbackInfoReturnable<Pair<BlockPos, RegistryEntry<ConfiguredStructureFeature<?, ?>>>> ci, Set set, Set set2, double d,
+    private void locateIslandStructure(ServerWorld serverWorld, RegistryEntryList<ConfiguredStructureFeature<?, ?>> registryEntryList, BlockPos center, int radius,
+            boolean skipExistingChunk, CallbackInfoReturnable<Pair<BlockPos, RegistryEntry<ConfiguredStructureFeature<?, ?>>>> ci, Set set, Set set2, double d,
             Map<StructurePlacement, Set<RegistryEntry<ConfiguredStructureFeature<?, ?>>>> map, List list) {
         for (Map.Entry<StructurePlacement, Set<RegistryEntry<ConfiguredStructureFeature<?, ?>>>> entry : map.entrySet()) {
             if (entry.getKey() instanceof IslandStructurePlacement) {

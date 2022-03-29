@@ -2,6 +2,7 @@ accessWidener v1 named
 
 extendable method net/minecraft/client/world/GeneratorType <init> (Ljava/lang/String;)V
 extendable class net/minecraft/world/gen/chunk/NoiseChunkGenerator
+extendable method net/minecraft/world/gen/chunk/NoiseChunkGenerator <init> (Lnet/minecraft/util/registry/Registry;Lnet/minecraft/util/registry/Registry;Lnet/minecraft/world/biome/source/BiomeSource;Lnet/minecraft/world/biome/source/BiomeSource;JLnet/minecraft/util/registry/RegistryEntry;)V
 accessible field net/minecraft/world/gen/chunk/NoiseChunkGenerator noiseRegistry Lnet/minecraft/util/registry/Registry;
 accessible field net/minecraft/world/gen/chunk/NoiseChunkGenerator seed J
 extendable method net/minecraft/world/gen/chunk/ChunkGenerator method_41044 (Lnet/minecraft/structure/StructureSet$WeightedEntry;Lnet/minecraft/world/gen/StructureAccessor;Lnet/minecraft/util/registry/DynamicRegistryManager;Lnet/minecraft/structure/StructureManager;JLnet/minecraft/world/chunk/Chunk;Lnet/minecraft/util/math/ChunkPos;Lnet/minecraft/util/math/ChunkSectionPos;)Z

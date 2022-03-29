@@ -11,6 +11,8 @@ import net.minecraft.util.registry.DynamicRegistryManager;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeKeys;
+import net.minecraft.world.biome.GenerationSettings;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.ConfiguredStructureFeature;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
@@ -33,6 +35,9 @@ public class SkyblockGen implements ModInitializer {
     private static final StructureFeature<DefaultFeatureConfig> SKYBLOCK_FEATURE = new IslandFeature(DefaultFeatureConfig.CODEC);
     private static final ConfiguredStructureFeature<?, ?> SKYBLOCK_CONFIGURED = SKYBLOCK_FEATURE.configure(DefaultFeatureConfig.DEFAULT, IS_OVERWORLD);
 
+    public static final Biome SKYBLOCK_BIOME = Biome.Builder.copy(BuiltinRegistries.BIOME.entryOf(BiomeKeys.THE_VOID).value())
+            .generationSettings(new GenerationSettings.Builder().build()).build();
+
     @Override
     public void onInitialize() {
         Registry.register(Registry.CHUNK_GENERATOR, new Identifier(MODID, "skyblock_generator"), SkyblockChunkGenerator.CODEC);
@@ -49,6 +54,8 @@ public class SkyblockGen implements ModInitializer {
         var islandsKey = RegistryKey.of(Registry.STRUCTURE_SET_KEY, new Identifier(MODID, "skyblock_islands"));
 
         BuiltinRegistries.add(BuiltinRegistries.STRUCTURE_SET, islandsKey, new StructureSet(islandEntry, new IslandStructurePlacement()));
+
+        BuiltinRegistries.add(BuiltinRegistries.BIOME, new Identifier(SkyblockGen.MODID, "skyblock_biome"), SKYBLOCK_BIOME);
     }
 
     private static final GeneratorType SKYBLOCK = new GeneratorType("skyblock") {

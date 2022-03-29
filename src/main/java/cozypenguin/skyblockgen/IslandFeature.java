@@ -18,8 +18,8 @@ public class IslandFeature extends StructureFeature<DefaultFeatureConfig> {
     private static final Identifier SKYBLOCK_ISLAND = new Identifier(SkyblockGen.MODID, "skyblock_island");
 
     public IslandFeature(Codec<DefaultFeatureConfig> codec) {
-        super(codec, StructureGeneratorFactory.simple((Predicate<Context<DefaultFeatureConfig>>) c -> true/* c.chunkGenerator() instanceof SkyblockChunkGenerator */,
-                IslandFeature::addPieces));
+        super(codec,
+                StructureGeneratorFactory.simple((Predicate<Context<DefaultFeatureConfig>>) c -> c.chunkGenerator() instanceof SkyblockChunkGenerator, IslandFeature::addPieces));
     }
 
     private static void addPieces(StructurePiecesCollector collector, StructurePiecesGenerator.Context<DefaultFeatureConfig> context) {

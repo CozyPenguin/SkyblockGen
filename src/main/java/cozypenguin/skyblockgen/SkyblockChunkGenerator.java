@@ -22,6 +22,8 @@ import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.ChunkRegion;
 import net.minecraft.world.HeightLimitView;
 import net.minecraft.world.Heightmap.Type;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.GenerationSettings;
 import net.minecraft.world.biome.source.BiomeAccess;
 import net.minecraft.world.biome.source.BiomeSource;
 import net.minecraft.world.biome.source.FixedBiomeSource;
@@ -53,8 +55,7 @@ public class SkyblockChunkGenerator extends NoiseChunkGenerator {
 
     public SkyblockChunkGenerator(DynamicRegistryManager registryManager, long seed) {
         this(registryManager.get(Registry.STRUCTURE_SET_KEY), registryManager.get(Registry.NOISE_WORLDGEN),
-                new FixedBiomeSource(
-                        registryManager.get(Registry.BIOME_KEY).getOrCreateEntry(RegistryKey.of(Registry.BIOME_KEY, new Identifier(SkyblockGen.MODID, "skyblock_biome")))),
+                new FixedBiomeSource(RegistryEntry.of(Biome.Builder.copy(SkyblockGen.SKYBLOCK_BIOME).generationSettings(new GenerationSettings.Builder().build()).build())),
                 MultiNoiseBiomeSource.Preset.OVERWORLD.getBiomeSource(registryManager.get(Registry.BIOME_KEY), true), seed,
                 registryManager.get(Registry.CHUNK_GENERATOR_SETTINGS_KEY).getOrCreateEntry(ChunkGeneratorSettings.OVERWORLD));
     }

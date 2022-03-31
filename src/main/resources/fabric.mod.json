@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "skyblockgen",
-  "version": "1.0.0",
+  "version": "$version",
   "name": "Skyblock Gen",
   "description": "Adds a Skyblock Generator Type",
   "authors": [

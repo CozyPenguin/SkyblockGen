@@ -1,7 +1,8 @@
-package cozypenguin.skyblockgen;
+package cozypenguin.skyblockgen.island;
 
 import java.util.Random;
 
+import cozypenguin.skyblockgen.SkyblockGen;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.structure.SimpleStructurePiece;
 import net.minecraft.structure.StructureManager;

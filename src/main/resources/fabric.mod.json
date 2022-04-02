@@ -7,12 +7,18 @@
   "authors": [
     "CozyPenguin"
   ],
-  "contact": {},
-  "license": "GPL v3",
+  "contact": {
+    "issues": "https://github.com/CozyPenguin/SkyblockGen/issues",
+    "sources": "https://github.com/CozyPenguin/SkyblockGen"
+  },
+  "license": "LGPL v3",
   "icon": "assets/skyblockgen/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
+      "cozypenguin.skyblockgen.SkyblockGen"
+    ],
+    "client": [
       "cozypenguin.skyblockgen.SkyblockGen"
     ]
   },
@@ -23,7 +29,7 @@
   "depends": {
     "fabricloader": ">=0.12.12",
     "fabric": "*",
-    "minecraft": "1.18.x",
+    "minecraft": "1.18.2",
     "java": ">=17"
   }
 }

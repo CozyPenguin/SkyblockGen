@@ -4,11 +4,13 @@
     "package": "cozypenguin.skyblockgen.mixin",
     "compatibilityLevel": "JAVA_17",
     "mixins": [
-        "GeneratorTypeAccessor",
         "ChunkGeneratorMixin",
+        "GeneratorOptionsMixin",
         "MinecraftServerMixin"
     ],
-    "client": [],
+    "client": [
+        "GeneratorTypeAccessor"
+    ],
     "server": [],
     "injectors": {
         "defaultRequire": 1

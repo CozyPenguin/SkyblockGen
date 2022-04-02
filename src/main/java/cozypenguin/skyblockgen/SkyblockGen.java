@@ -1,19 +1,17 @@
 package cozypenguin.skyblockgen;
 
+import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.ModInitializer;
-import net.minecraft.client.world.GeneratorType;
 import net.minecraft.structure.StructurePieceType;
 import net.minecraft.structure.StructureSet;
 import net.minecraft.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.BuiltinRegistries;
-import net.minecraft.util.registry.DynamicRegistryManager;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.biome.GenerationSettings;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.ConfiguredStructureFeature;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.StructureFeature;
@@ -21,10 +19,11 @@ import net.minecraft.world.gen.feature.StructureFeature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import cozypenguin.skyblockgen.island.IslandFeature;
+import cozypenguin.skyblockgen.island.IslandGenerator;
 import cozypenguin.skyblockgen.island.IslandStructurePlacement;
-import cozypenguin.skyblockgen.mixin.GeneratorTypeAccessor;
 
-public class SkyblockGen implements ModInitializer {
+public class SkyblockGen implements ModInitializer, ClientModInitializer {
     public static final String MODID = "skyblockgen";
 
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
@@ -40,9 +39,7 @@ public class SkyblockGen implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        Registry.register(Registry.CHUNK_GENERATOR, new Identifier(MODID, "skyblock_generator"), SkyblockChunkGenerator.CODEC);
-
-        GeneratorTypeAccessor.getValues().add(SKYBLOCK);
+        Registry.register(Registry.CHUNK_GENERATOR, new Identifier(MODID, "skyblock"), SkyblockChunkGenerator.CODEC);
 
         Registry.register(Registry.STRUCTURE_PIECE, new Identifier(MODID, "skyblock_island_piece"), SKYBLOCK_ISLAND_PIECE);
         Registry.register(Registry.STRUCTURE_FEATURE, new Identifier(MODID, "skyblock_island"), SKYBLOCK_FEATURE);
@@ -58,10 +55,9 @@ public class SkyblockGen implements ModInitializer {
         BuiltinRegistries.add(BuiltinRegistries.BIOME, new Identifier(SkyblockGen.MODID, "skyblock_biome"), SKYBLOCK_BIOME);
     }
 
-    private static final GeneratorType SKYBLOCK = new GeneratorType("skyblock") {
-        @Override
-        protected ChunkGenerator getChunkGenerator(DynamicRegistryManager registryManager, long seed) {
-            return new SkyblockChunkGenerator(registryManager, seed);
-        }
-    };
+    @Override
+    public void onInitializeClient() {
+        GeneratorTypes.register();
+    }
+
 }

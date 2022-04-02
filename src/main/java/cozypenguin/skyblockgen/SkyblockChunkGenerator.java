@@ -64,6 +64,10 @@ public class SkyblockChunkGenerator extends NoiseChunkGenerator {
         super(structuresRegistry, noiseRegistry, populationSource, biomeSource, seed, settings);
     }
 
+    public static SkyblockChunkGenerator fromNoiseChunkGenerator(NoiseChunkGenerator generator) {
+        return new SkyblockChunkGenerator(generator.field_37053, generator.noiseRegistry, generator.populationSource, generator.biomeSource, generator.seed, generator.settings);
+    }
+
     @Override
     public void populateEntities(ChunkRegion region) {
     }

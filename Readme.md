@@ -7,6 +7,11 @@ At the moment, the mod also lacks support for modded biomes at spawn because the
 
 ![Skyblock Island](./images/island.png)
 
+## How it works
+
+To create a skyblock world in singleplayer, you have to set the world type to "Skyblock" in the world creation menu.
+On servers you have to set `level-type=skyblockgen:skyblock`.
+
 ## Dependencies
 
 The mod depends on Fabric API.

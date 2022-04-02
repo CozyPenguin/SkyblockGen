@@ -5,4 +5,8 @@ extendable class net/minecraft/world/gen/chunk/NoiseChunkGenerator
 extendable method net/minecraft/world/gen/chunk/NoiseChunkGenerator <init> (Lnet/minecraft/util/registry/Registry;Lnet/minecraft/util/registry/Registry;Lnet/minecraft/world/biome/source/BiomeSource;Lnet/minecraft/world/biome/source/BiomeSource;JLnet/minecraft/util/registry/RegistryEntry;)V
 accessible field net/minecraft/world/gen/chunk/NoiseChunkGenerator noiseRegistry Lnet/minecraft/util/registry/Registry;
 accessible field net/minecraft/world/gen/chunk/NoiseChunkGenerator seed J
+accessible field net/minecraft/world/gen/chunk/NoiseChunkGenerator settings Lnet/minecraft/util/registry/RegistryEntry;
 extendable method net/minecraft/world/gen/chunk/ChunkGenerator method_41044 (Lnet/minecraft/structure/StructureSet$WeightedEntry;Lnet/minecraft/world/gen/StructureAccessor;Lnet/minecraft/util/registry/DynamicRegistryManager;Lnet/minecraft/structure/StructureManager;JLnet/minecraft/world/chunk/Chunk;Lnet/minecraft/util/math/ChunkPos;Lnet/minecraft/util/math/ChunkSectionPos;)Z
+accessible field net/minecraft/world/gen/chunk/ChunkGenerator populationSource Lnet/minecraft/world/biome/source/BiomeSource;
+accessible field net/minecraft/world/gen/chunk/ChunkGenerator biomeSource Lnet/minecraft/world/biome/source/BiomeSource;
+accessible field net/minecraft/world/gen/chunk/ChunkGenerator field_37053 Lnet/minecraft/util/registry/Registry;

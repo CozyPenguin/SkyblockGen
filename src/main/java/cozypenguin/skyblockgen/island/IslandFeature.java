@@ -1,9 +1,11 @@
-package cozypenguin.skyblockgen;
+package cozypenguin.skyblockgen.island;
 
 import java.util.function.Predicate;
 
 import com.mojang.serialization.Codec;
 
+import cozypenguin.skyblockgen.SkyblockChunkGenerator;
+import cozypenguin.skyblockgen.SkyblockGen;
 import net.minecraft.structure.StructureGeneratorFactory;
 import net.minecraft.structure.StructurePiecesCollector;
 import net.minecraft.structure.StructurePiecesGenerator;

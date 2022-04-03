@@ -17,7 +17,7 @@ public class IslandStructurePlacement implements StructurePlacement {
 
     @Override
     public boolean isStartChunk(ChunkGenerator chunkGenerator, long l, int i, int j) {
-        return i == 0 && j == 0;
+        return false;
     }
 
     @Override

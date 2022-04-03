@@ -1,7 +1,5 @@
 package cozypenguin.skyblockgen.mixin;
 
-import java.util.HashSet;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -26,10 +24,7 @@ public class GeneratorOptionsMixin {
             CallbackInfoReturnable<GeneratorOptions> cir, long seed, Registry<DimensionType> dimensionType, Registry<Biome> biome, Registry<StructureSet> structureSet,
             Registry<DimensionOptions> dimensionOptions, String levelType) {
         if (levelType.equals("skyblockgen:skyblock")) {
-            HashSet<String> toReplace = new HashSet<>();
-            toReplace.add("minecraft:overworld");
-            toReplace.add("minecraft:the_nether");
-            var options = GeneratorOptionsHelper.getGeneratorOptionsRegistry(dimensionOptions, dimensionType, registryManager, seed, toReplace);
+            var options = GeneratorOptionsHelper.getGeneratorOptionsRegistry(dimensionOptions, dimensionType, registryManager, seed);
 
             cir.setReturnValue(new GeneratorOptions(seed, worldGenProperties.generateStructures(), false, options));
             cir.cancel();

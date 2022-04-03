@@ -18,6 +18,7 @@ import net.minecraft.util.math.noise.DoublePerlinNoiseSampler;
 import net.minecraft.util.registry.DynamicRegistryManager;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryEntry;
+import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.ChunkRegion;
 import net.minecraft.world.HeightLimitView;
 import net.minecraft.world.Heightmap.Type;
@@ -41,31 +42,34 @@ public class SkyblockChunkGenerator extends NoiseChunkGenerator {
             .create(instance -> method_41042(instance).and(instance.group(RegistryOps.createRegistryCodec(Registry.NOISE_WORLDGEN).forGetter(scg -> scg.noiseRegistry),
                     BiomeSource.CODEC.fieldOf("population_source").forGetter(SkyblockChunkGenerator::getPopulationSource),
                     BiomeSource.CODEC.fieldOf("biome_source").forGetter(SkyblockChunkGenerator::getBiomeSource), Codec.LONG.fieldOf("seed").stable().forGetter(scg -> scg.seed),
-                    ChunkGeneratorSettings.REGISTRY_CODEC.fieldOf("settings").forGetter(scg -> scg.settings))
-
-            ).apply(instance, instance.stable(SkyblockChunkGenerator::new)));
+                    ChunkGeneratorSettings.REGISTRY_CODEC.fieldOf("settings").forGetter(scg -> scg.settings),
+                    Identifier.CODEC.fieldOf("dimension").forGetter(scg -> scg.dimension))).apply(instance, instance.stable(SkyblockChunkGenerator::new)));
 
     private static final Identifier SKYBLOCK_ISLAND = new Identifier(SkyblockGen.MODID, "skyblock_island");
+
+    private final Identifier dimension;
 
     @Override
     protected Codec<? extends ChunkGenerator> getCodec() {
         return CODEC;
     }
 
-    public SkyblockChunkGenerator(DynamicRegistryManager registryManager, long seed) {
+    public SkyblockChunkGenerator(DynamicRegistryManager registryManager, long seed, Identifier dimension) {
         this(registryManager.get(Registry.STRUCTURE_SET_KEY), registryManager.get(Registry.NOISE_WORLDGEN),
                 new FixedBiomeSource(RegistryEntry.of(Biome.Builder.copy(SkyblockGen.SKYBLOCK_BIOME).generationSettings(new GenerationSettings.Builder().build()).build())),
                 MultiNoiseBiomeSource.Preset.OVERWORLD.getBiomeSource(registryManager.get(Registry.BIOME_KEY), true), seed,
-                registryManager.get(Registry.CHUNK_GENERATOR_SETTINGS_KEY).getOrCreateEntry(ChunkGeneratorSettings.OVERWORLD));
+                registryManager.get(Registry.CHUNK_GENERATOR_SETTINGS_KEY).getOrCreateEntry(ChunkGeneratorSettings.OVERWORLD), dimension);
     }
 
     private SkyblockChunkGenerator(Registry<StructureSet> structuresRegistry, Registry<DoublePerlinNoiseSampler.NoiseParameters> noiseRegistry, BiomeSource populationSource,
-            BiomeSource biomeSource, long seed, RegistryEntry<ChunkGeneratorSettings> settings) {
+            BiomeSource biomeSource, long seed, RegistryEntry<ChunkGeneratorSettings> settings, Identifier dimension) {
         super(structuresRegistry, noiseRegistry, populationSource, biomeSource, seed, settings);
+        this.dimension = dimension;
     }
 
-    public static SkyblockChunkGenerator fromNoiseChunkGenerator(NoiseChunkGenerator generator) {
-        return new SkyblockChunkGenerator(generator.field_37053, generator.noiseRegistry, generator.populationSource, generator.biomeSource, generator.seed, generator.settings);
+    public static SkyblockChunkGenerator fromNoiseChunkGenerator(NoiseChunkGenerator generator, Identifier dimension) {
+        return new SkyblockChunkGenerator(generator.field_37053, generator.noiseRegistry, generator.populationSource, generator.biomeSource, generator.seed, generator.settings,
+                dimension);
     }
 
     @Override
@@ -102,7 +106,19 @@ public class SkyblockChunkGenerator extends NoiseChunkGenerator {
 
     @Override
     public ChunkGenerator withSeed(long seed) {
-        return new SkyblockChunkGenerator(this.field_37053, this.noiseRegistry, this.populationSource.withSeed(seed), this.biomeSource.withSeed(seed), seed, this.settings);
+        return new SkyblockChunkGenerator(this.field_37053, this.noiseRegistry, this.populationSource.withSeed(seed), this.biomeSource.withSeed(seed), seed, this.settings,
+                this.dimension);
+    }
+
+    @Override
+    public void setStructureStarts(DynamicRegistryManager registryManager, StructureAccessor world, Chunk chunk, StructureManager structureManager, long worldSeed) {
+        var chunkPos = chunk.getPos();
+        var chunkSectionPos = ChunkSectionPos.from(chunk);
+        if (chunkPos.x == 0 && chunkPos.z == 0 && dimension.equals(new Identifier("overworld"))) {
+            var entry = registryManager.get(Registry.STRUCTURE_SET_KEY).entryOf(RegistryKey.of(Registry.STRUCTURE_SET_KEY, new Identifier(SkyblockGen.MODID, "skyblock_islands")));
+            method_41044(entry.value().structures().get(0), world, registryManager, structureManager, worldSeed, chunk, chunkPos, chunkSectionPos);
+        }
+        super.setStructureStarts(registryManager, world, chunk, structureManager, worldSeed);
     }
 
     @Override

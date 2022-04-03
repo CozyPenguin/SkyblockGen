@@ -25,7 +25,7 @@ public class IslandFeature extends StructureFeature<DefaultFeatureConfig> {
     }
 
     private static void addPieces(StructurePiecesCollector collector, StructurePiecesGenerator.Context<DefaultFeatureConfig> context) {
-        var pos = new BlockPos(context.chunkPos().getStartX(), 100, context.chunkPos().getStartZ());
+        var pos = new BlockPos(context.chunkPos().getStartX(), 64, context.chunkPos().getStartZ());
 
         collector.addPiece(new IslandGenerator(context.structureManager(), SKYBLOCK_ISLAND, pos));
 
